@@ -18,175 +18,7 @@
             </div>
             <!-- Hero Area End-->
 
-            <style>
-                .product-detail-wrapper {
-                    background: #ffffff;
-                    border-radius: 24px;
-                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
-                    padding: 50px;
-                    margin: -50px auto 50px;
-                    position: relative;
-                    z-index: 10;
-                }
-
-                .product-img-box {
-                    text-align: center;
-                }
-
-                .product-img-box img {
-                    border-radius: 16px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-                    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    max-height: 550px;
-                    width: 100%;
-                    object-fit: contain;
-                    background: #f9f9f9;
-                }
-
-                .product-img-box img:hover {
-                    transform: scale(1.03);
-                }
-
-                .product-info-box {
-                    padding-left: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    height: 100%;
-                }
-
-                @media (max-width: 991px) {
-                    .product-info-box {
-                        padding-left: 0;
-                        margin-top: 40px;
-                    }
-
-                    .product-detail-wrapper {
-                        padding: 30px;
-                    }
-                }
-
-                .product-info-box h3 {
-                    font-size: 2.8rem;
-                    font-weight: 800;
-                    color: #1a1a1a;
-                    margin-bottom: 15px;
-                    letter-spacing: -1px;
-                    font-family: 'Inter', sans-serif;
-                }
-
-                .product-info-box .price {
-                    font-size: 2.2rem;
-                    font-weight: 700;
-                    color: #ff2020;
-                    margin-bottom: 25px;
-                    display: inline-block;
-                    background: rgba(255, 32, 32, 0.08);
-                    padding: 5px 20px;
-                    border-radius: 50px;
-                }
-
-                .product-info-box p {
-                    font-size: 1.15rem;
-                    line-height: 1.8;
-                    color: #555;
-                    margin-bottom: 40px;
-                    font-family: 'Inter', sans-serif;
-                }
-
-                .action-group {
-                    display: flex;
-                    align-items: center;
-                    gap: 20px;
-                    flex-wrap: wrap;
-                }
-
-                .qty-selector {
-                    display: flex;
-                    align-items: center;
-                    border: 2px solid #e1e1e1;
-                    border-radius: 50px;
-                    padding: 8px 20px;
-                    background: #fff;
-                }
-
-                .qty-selector input {
-                    width: 40px;
-                    text-align: center;
-                    border: none;
-                    background: transparent;
-                    font-weight: 700;
-                    font-size: 1.3rem;
-                    color: #1a1a1a;
-                    outline: none;
-                }
-
-                .qty-selector button {
-                    background: none;
-                    border: none;
-                    font-size: 1.2rem;
-                    cursor: pointer;
-                    color: #888;
-                    transition: color 0.2s;
-                    outline: none;
-                }
-
-                .qty-selector button:hover {
-                    color: #ff2020;
-                }
-
-                .btn-buy-now {
-                    background: #1a1a1a;
-                    color: #fff;
-                    border-radius: 50px;
-                    padding: 16px 35px;
-                    font-weight: 700;
-                    font-size: 1.1rem;
-                    letter-spacing: 0.5px;
-                    border: none;
-                    transition: all 0.3s;
-                    flex: 1;
-                    text-align: center;
-                    cursor: pointer;
-                    min-width: 180px;
-                }
-
-                .btn-buy-now:hover {
-                    background: #ff2020;
-                    color: #fff;
-                    transform: translateY(-3px);
-                    box-shadow: 0 8px 20px rgba(255, 32, 32, 0.25);
-                }
-
-                .btn-add-cart {
-                    background: #fff;
-                    color: #1a1a1a;
-                    border: 2px solid #1a1a1a;
-                    border-radius: 50px;
-                    padding: 14px 35px;
-                    font-weight: 700;
-                    font-size: 1.1rem;
-                    letter-spacing: 0.5px;
-                    transition: all 0.3s;
-                    flex: 1;
-                    text-align: center;
-                    cursor: pointer;
-                    min-width: 180px;
-                }
-
-                .btn-add-cart:hover {
-                    background: #1a1a1a;
-                    color: #fff;
-                    transform: translateY(-3px);
-                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-                }
-
-                @media (max-width: 767px) {
-                    .pdp-main-image {
-                        cursor: default !important;
-                    }
-                }
-            </style>
+            <!-- PDP styles moved to public/assets/css/premium.css -->
 
 
             <!--? Product Details Start -->
@@ -271,8 +103,7 @@
 
                                 </div>
 
-                                <div class="pdp-description"
-                                    style="font-size: 14px; color: var(--premium-gray); line-height: 1.6; margin-bottom: 30px;">
+                                <div class="pdp-description">
                                     <%= product.description %>
                                 </div>
 
@@ -366,16 +197,14 @@
                                                 </div>
 
                                                 <!-- ACTIONS -->
-                                                <div class="pdp-actions"
-                                                    style="display: flex; align-items: center; gap: 15px;">
+                                                <div class="pdp-actions">
                                                     <button class="btn-premium-secondary"
                                                         onclick="handleCartAction('<%= product._id %>', false)">Sepete
                                                         Ekle</button>
                                                     <button class="btn-premium-primary"
                                                         onclick="handleCartAction('<%= product._id %>', true)">Hemen
                                                         Satın Al</button>
-                                                    <button class="fav-btn fav-btn-pdp" data-id="<%= product._id %>"
-                                                        style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #1a1a1a; background: #fff; color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; transition: all 0.3s; flex-shrink: 0; padding: 0; outline: none;">
+                                                    <button class="fav-btn fav-btn-pdp" data-id="<%= product._id %>">
                                                         <i
                                                             class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
                                                     </button>
@@ -393,11 +222,8 @@
                                                     if (product.gemCut) specs.push(['Kesim / Şekil', product.gemCut]);
                                                     if (product.certificate) specs.push(['Sertifika', product.certificate]); %>
                                                     <% if (specs.length > 0) { %>
-                                                        <div class="pdp-specs-box"
-                                                            style="margin-top:30px; background:#f9f8f5; border-radius:14px; padding:20px 24px; border:1px solid #e8e0d0;">
-                                                            <h4
-                                                                style="font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:#1a1a1a; margin-bottom:16px;">
-                                                                Ürün Özellikleri</h4>
+                                                        <div class="pdp-specs-box">
+                                                            <h4>Ürün Özellikleri</h4>
                                                             <table style="width:100%; border-collapse:collapse;">
                                                                 <% specs.forEach(([label, value])=> { %>
                                                                     <tr style="border-bottom:1px solid #ede8df;">

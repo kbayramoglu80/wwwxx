@@ -1,0 +1,1 @@
+Preparing to patch premium.css and views/product_details.ejs: override .pdp-title to remove unwanted margin-top and increase prominence; change product-detail-wrapper margin from -50px to 20px.
