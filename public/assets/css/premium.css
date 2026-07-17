@@ -969,24 +969,27 @@ h1, h2, h3, h4, h5, h6,
 
 /* === ULTRA PREMIUM FILTERS === */
 .premium-filter-sidebar {
-    background: #ffffff;
-    border: 1px solid var(--premium-border);
-    padding: 28px 24px;
+    background: linear-gradient(180deg, #fffdf9 0%, #ffffff 100%);
+    border: 1px solid rgba(197, 160, 89, 0.18);
+    border-radius: 24px;
+    padding: 24px 20px;
     position: sticky;
     top: 20px;
-    transition: var(--transition-smooth);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .premium-filter-sidebar:hover {
-    box-shadow: var(--shadow-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.10);
 }
 
 .filter-header-title {
     font-weight: 700;
     font-size: 15px;
-    color: var(--premium-black);
+    color: #111827;
     margin: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     font-family: 'Inter', sans-serif;
     display: flex;
     align-items: center;
@@ -995,23 +998,22 @@ h1, h2, h3, h4, h5, h6,
 
 .filter-clear-link {
     font-size: 11px;
-    font-weight: 600;
-    color: var(--premium-gray);
+    font-weight: 700;
+    color: #6b7280;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: var(--transition-fast);
+    transition: color 0.25s ease;
 }
 
 .filter-clear-link:hover {
-    color: var(--premium-gold);
+    color: #c5a059;
     text-decoration: none;
 }
 
-/* Filter Group Separator */
 .filter-group {
-    border-bottom: 1px solid #f2f2f2;
-    padding-bottom: 24px;
-    margin-bottom: 24px;
+    border-bottom: 1px solid #efe7db;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 .filter-group:last-child {
@@ -1024,13 +1026,12 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 700;
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--premium-black);
+    letter-spacing: 1.4px;
+    color: #111827;
     display: block;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
-/* Premium Search Input */
 .premium-search-wrapper {
     position: relative;
     display: flex;
@@ -1039,41 +1040,43 @@ h1, h2, h3, h4, h5, h6,
 
 .premium-search-input {
     width: 100%;
-    padding: 12px 48px 12px 16px;
+    padding: 12px 46px 12px 14px;
     font-size: 13px;
-    border: 1px solid var(--premium-border);
-    background-color: var(--premium-light-gray);
-    color: var(--premium-black);
+    border: 1px solid #e7dfd3;
+    background-color: #fcfaf7;
+    color: #111827;
     outline: none;
-    transition: var(--transition-fast);
-    border-radius: 0;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 999px;
 }
 
 .premium-search-input:focus {
-    border-color: var(--premium-black);
+    border-color: #c5a059;
     background-color: #fff;
-    box-shadow: none;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.12);
 }
 
 .premium-search-btn {
     position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: transparent;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
     border: none;
-    padding: 0 16px;
-    color: var(--premium-black);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #fff;
     cursor: pointer;
-    font-size: 13px;
-    transition: var(--transition-fast);
+    font-size: 12px;
+    transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .premium-search-btn:hover {
-    color: var(--premium-gold);
+    transform: translateY(-50%) scale(1.04);
+    background: linear-gradient(135deg, #c5a059 0%, #e4b86b 100%);
 }
 
-/* Custom Checkboxes/Radios (Elegant minimalist check circle) */
 .premium-radio-list {
     display: flex;
     flex-direction: column;
@@ -1088,17 +1091,16 @@ h1, h2, h3, h4, h5, h6,
     cursor: pointer;
     font-size: 13px;
     font-weight: 500;
-    color: #444;
+    color: #5b5560;
     user-select: none;
     margin-bottom: 0 !important;
-    transition: var(--transition-fast);
+    transition: color 0.25s ease;
 }
 
 .premium-radio-container:hover {
-    color: var(--premium-black);
+    color: #111827;
 }
 
-/* Hide standard browser radio */
 .premium-radio-container input {
     position: absolute;
     opacity: 0;
@@ -1107,7 +1109,6 @@ h1, h2, h3, h4, h5, h6,
     width: 0;
 }
 
-/* Custom indicator circle */
 .premium-radio-checkmark {
     position: absolute;
     top: 50%;
@@ -1116,21 +1117,20 @@ h1, h2, h3, h4, h5, h6,
     height: 16px;
     width: 16px;
     background-color: #fff;
-    border: 1px solid var(--premium-border);
+    border: 1px solid #d8cdbb;
     border-radius: 50%;
-    transition: var(--transition-fast);
+    transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
 .premium-radio-container:hover input ~ .premium-radio-checkmark {
-    border-color: var(--premium-black);
+    border-color: #c5a059;
 }
 
 .premium-radio-container input:checked ~ .premium-radio-checkmark {
-    background-color: var(--premium-black);
-    border-color: var(--premium-black);
+    background-color: #111827;
+    border-color: #111827;
 }
 
-/* Indicator dot */
 .premium-radio-checkmark:after {
     content: "";
     position: absolute;
@@ -1148,13 +1148,11 @@ h1, h2, h3, h4, h5, h6,
     display: block;
 }
 
-/* Label when selected */
 .premium-radio-container input:checked ~ span:not(.premium-radio-checkmark) {
-    color: var(--premium-black);
-    font-weight: 600;
+    color: #111827;
+    font-weight: 700;
 }
 
-/* Premium Tags/Chips style (e.g. for Color D E F G H) */
 .premium-tags-grid {
     display: flex;
     flex-wrap: wrap;
@@ -1177,24 +1175,26 @@ h1, h2, h3, h4, h5, h6,
 
 .premium-tag-box {
     display: inline-block;
-    padding: 8px 16px;
+    padding: 8px 13px;
     font-size: 12px;
-    font-weight: 600;
-    border: 1px solid var(--premium-border);
+    font-weight: 700;
+    border: 1px solid #e7dfd3;
     background-color: #fff;
-    color: var(--premium-black);
-    transition: var(--transition-fast);
+    color: #111827;
+    transition: all 0.25s ease;
     text-align: center;
-    min-width: 42px;
+    min-width: 44px;
+    border-radius: 999px;
 }
 
 .premium-tag-container:hover .premium-tag-box {
-    border-color: var(--premium-black);
+    border-color: #c5a059;
+    color: #c5a059;
 }
 
 .premium-tag-container input:checked ~ .premium-tag-box {
-    background-color: var(--premium-black);
-    border-color: var(--premium-black);
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    border-color: #111827;
     color: #fff;
 }
 
