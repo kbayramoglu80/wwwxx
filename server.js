@@ -9,6 +9,14 @@ const app = express();
 const chatController = require('./controllers/chatController');
 
 const PORT = process.env.PORT || 3000;
+const mongoOptions = {
+    serverSelectionTimeoutMS: 30000,
+    socketTimeoutMS: 60000,
+    family: 4,
+    retryWrites: true,
+    maxPoolSize: 10,
+    tls: true
+};
 
 // Trust proxy settings (for Cloudflare, Nginx, etc.)
 app.set('trust proxy', true);
@@ -43,14 +51,26 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Session
 const isProduction = process.env.NODE_ENV === 'production';
+let sessionStore = null;
+
+if (process.env.MONGODB_URI) {
+    try {
+        sessionStore = (MongoStore.create || MongoStore.default.create)({
+            mongoUrl: process.env.MONGODB_URI,
+            ttl: 14 * 24 * 60 * 60, // 14 days
+            autoRemove: 'native',
+            mongoOptions
+        });
+    } catch (storeError) {
+        console.warn('Session store başlatılamadı, oturumlar hafızada devam edecek:', storeError.message);
+    }
+}
+
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'kuyumcu_fallback_secret',
     resave: false,
     saveUninitialized: false,
-    store: (MongoStore.create || MongoStore.default.create)({
-        mongoUrl: process.env.MONGODB_URI,
-        ttl: 14 * 24 * 60 * 60 // 14 days
-    }),
+    store: sessionStore || undefined,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 days
         secure: isProduction,
@@ -164,18 +184,31 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log('MongoDB veritabanına başarıyla bağlanıldı.');
-        app.listen(PORT, () => {
-            console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
-        });
-    })
-    .catch(err => {
-        console.error('MongoDB bağlantı hatası:', err.message);
-        console.log('Lütfen .env dosyasındaki MONGODB_URI adresini kontrol edin.');
-        // Veritabanı olmadan da sunucuyu test edebilmek için geçici olarak başlatıyoruz
-        app.listen(PORT, () => {
-            console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor (MongoDB BAĞLANTISI YOK).`);
-        });
+const startServer = () => {
+    app.listen(PORT, () => {
+        console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
     });
+};
+
+const connectMongoWithRetry = async (attempt = 1) => {
+    try {
+        if (!process.env.MONGODB_URI) {
+            throw new Error('MONGODB_URI tanımlı değil.');
+        }
+
+        await mongoose.connect(process.env.MONGODB_URI, mongoOptions);
+        console.log('MongoDB veritabanına başarıyla bağlanıldı.');
+        startServer();
+    } catch (err) {
+        console.error(`MongoDB bağlantı denemesi ${attempt} başarısız:`, err.message);
+
+        if (attempt < 4) {
+            setTimeout(() => connectMongoWithRetry(attempt + 1), 5000 * attempt);
+        } else {
+            console.warn('MongoDB bağlantısı kurulamadı. Sunucu hafif modda başlatılıyor.');
+            startServer();
+        }
+    }
+};
+
+connectMongoWithRetry();
