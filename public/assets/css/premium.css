@@ -202,7 +202,7 @@ body {
 }
 
 .premium-card-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #111827;
     margin-bottom: 8px;
@@ -405,11 +405,11 @@ body {
 .pdp-title {
     margin-top: 0!important;
     color: #0f172a!important;
-    font-weight: 700!important;
-    font-size: 44px!important;
+    font-weight: 302 !important;
+    font-size: 32px!important;
     margin-bottom: 18px;
     line-height: 1.08;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.5px !important;
     max-width: 720px;
 }
 
@@ -420,19 +420,19 @@ body {
 }
 
 .pdp-current-price {
-    font-size: 34px;
-    font-weight: 900;
+    font-size: 28px;
+    font-weight: 700;
     color: #111827;
     background: rgba(52, 90, 143, 0.08);
-    padding: 8px 18px;
+    padding: 6px 14px;
     border-radius: 999px;
 }
 
 .pdp-old-price {
-    font-size: 18px;
+    font-size: 16px;
     color: #8b8b8b;
     text-decoration: line-through;
-    margin-left: 18px;
+    margin-left: 14px;
 }
 
 .pdp-description {
@@ -615,17 +615,17 @@ body {
 .pdp-current-price {
     display: inline-block;
     background: rgba(52, 90, 143, 0.08);
-    padding: 10px 16px;
+    padding: 8px 12px;
     border-radius: 999px;
     color: #111827;
-    font-weight: 900;
-    font-size: 34px;
+    font-weight: 700;
+    font-size: 26px;
 }
 
 .pdp-old-price {
     color: #8b8b8b;
-    margin-left: 14px;
-    font-size: 16px;
+    margin-left: 12px;
+    font-size: 14px;
 }
 
 .pdp-description {
