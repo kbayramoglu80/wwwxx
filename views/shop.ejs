@@ -165,6 +165,23 @@
                                     <% }); %>
                                 </div>
                             </div>
+
+                            <!-- Maden Rengi -->
+                            <div class="filter-group">
+                                <label class="filter-group-label">💎 Maden Rengi</label>
+                                <div class="premium-tags-grid">
+                                    <label class="premium-tag-container">
+                                        <input type="radio" name="metalColor" id="metalColorAll" value="" onchange="this.form.submit()" <%= !activeFilters || !activeFilters.metalColor ? 'checked' : '' %>>
+                                        <span class="premium-tag-box">Tümü</span>
+                                    </label>
+                                    <% ['Beyaz Altın','Sarı Altın','Rose Gold','Platinum'].forEach(mc => { %>
+                                    <label class="premium-tag-container">
+                                        <input type="radio" name="metalColor" id="metalColor<%= mc.replace(/\s+/g,'') %>" value="<%= mc %>" onchange="this.form.submit()" <%= activeFilters && activeFilters.metalColor === mc ? 'checked' : '' %>>
+                                        <span class="premium-tag-box"><%= mc %></span>
+                                    </label>
+                                    <% }); %>
+                                </div>
+                            </div>
                             
                             <!-- Sertifika -->
                             <div class="filter-group">
@@ -278,9 +295,6 @@
                                 <!-- Mock secondary image for hover -->
                                 <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="secondary-img" style="filter: brightness(0.95);">
                             </a>
-                            <button class="fav-btn" data-id="<%= product._id %>">
-                                <i class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                            </button>
                         </div>
                         <div class="premium-card-info">
                             <div class="premium-card-title"><a href="/product/<%= product._id %>"><%= product.name %></a></div>
@@ -320,9 +334,6 @@
                                 <!-- Mock secondary image for hover -->
                                 <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="secondary-img" style="filter: brightness(0.95);">
                             </a>
-                            <button class="fav-btn" data-id="<%= product._id %>">
-                                <i class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                            </button>
                         </div>
                         <div class="premium-card-info">
                             <div class="premium-card-title"><a href="/product/<%= product._id %>"><%= product.name %></a></div>
@@ -354,9 +365,6 @@
                                 <!-- Mock secondary image for hover -->
                                 <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="secondary-img" style="filter: brightness(0.95);">
                             </a>
-                            <button class="fav-btn" data-id="<%= product._id %>">
-                                <i class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                            </button>
                         </div>
                         <div class="premium-card-info">
                             <div class="premium-card-title"><a href="/product/<%= product._id %>"><%= product.name %></a></div>

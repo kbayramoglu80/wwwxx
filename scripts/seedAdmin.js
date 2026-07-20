@@ -14,7 +14,7 @@ async function seedAdmin() {
             process.exit();
         }
 
-        const hashedPassword = await bcrypt.hash('admin123', 10);
+        const hashedPassword = await bcrypt.hash('Giz1234', 10);
         const adminUser = new User({
             name: 'Admin',
             email: 'admin@admin.com',
@@ -25,7 +25,7 @@ async function seedAdmin() {
         await adminUser.save();
         console.log('Admin kullanıcısı başarıyla oluşturuldu.');
         console.log('E-posta: admin@admin.com');
-        console.log('Şifre: admin123');
+        console.log('Şifre: Giz1234');
         process.exit();
     } catch (err) {
         console.error('Hata:', err);

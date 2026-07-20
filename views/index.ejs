@@ -44,14 +44,11 @@
                 }
 
                 .slider-area {
-                    margin-top: 280px;
-                    padding-top: 0;
                     min-height: auto;
                 }
 
                 @media (min-width: 992px) {
                     .slider-area {
-                        margin-top: 280px;
                         min-height: auto;
                     }
                 }
@@ -357,7 +354,7 @@
                     <div class="row justify-content-center mb-40">
                         <div class="col-xl-7 col-lg-8 col-md-10 text-center">
                             <div class="section-tittle mb-20">
-                                <h2>
+                                <h2 class="premium-new-arrival-title">
                                     <%= typeof setting !=='undefined' ? (setting.newArrivalTitle || 'Öne Çıkan Koleksiyonlar' )
                                         : 'Öne Çıkan Koleksiyonlar' %>
                                 </h2>
@@ -390,10 +387,6 @@
                                             <img src="<%= product.imageUrl %>" alt="<%= product.name %>"
                                                 class="secondary-img" style="filter: brightness(0.95);">
                                         </a>
-                                        <button class="fav-btn" data-id="<%= product._id %>">
-                                            <i
-                                                class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                                        </button>
                                     </div>
                                     <div class="premium-card-info">
                                         <div class="premium-card-title"><a href="/product/<%= product._id %>">
@@ -414,8 +407,8 @@
                                         <div class="card-actions">
                                             <a href="/product/<%= product._id %>" class="btn-premium-secondary"
                                                 style="padding: 10px; font-size: 10px;">İncele</a>
-                                            <button
-                                                onclick="openHomeAddToCartModal('<%= product._id %>', '<%= product.name %>', '<%= product.price %>', '<%= product.imageUrl %>')"
+                                            <button type="button"
+                                                onclick="openHomeAddToCartModal('<%= product._id %>')"
                                                 class="btn-premium-primary"
                                                 style="padding: 10px; font-size: 10px;">Sepete Ekle</button>
                                         </div>
@@ -468,10 +461,6 @@
                                                     <img src="<%= product.imageUrl %>" alt="<%= product.name %>"
                                                         class="secondary-img" style="filter: brightness(0.95);">
                                                 </a>
-                                                <button class="fav-btn" data-id="<%= product._id %>">
-                                                    <i
-                                                        class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                                                </button>
                                             </div>
                                             <div class="premium-card-info">
                                                 <div class="premium-card-title"><a href="/product/<%= product._id %>">
@@ -493,8 +482,8 @@
                                                 <div class="card-actions">
                                                     <a href="/product/<%= product._id %>" class="btn-premium-secondary"
                                                         style="padding: 10px; font-size: 10px;">İncele</a>
-                                                    <button
-                                                        onclick="openHomeAddToCartModal('<%= product._id %>', '<%= product.name %>', '<%= product.price %>', '<%= product.imageUrl %>')"
+                                                    <button type="button"
+                                                        onclick="openHomeAddToCartModal('<%= product._id %>')"
                                                         class="btn-premium-primary"
                                                         style="padding: 10px; font-size: 10px;">Sepete Ekle</button>
                                                 </div>
@@ -661,94 +650,50 @@
                                             { size: 30, diameter: 22.29 }
                                         ];
 
-                                        let currentProduct = null;
                                         let mcurrentStepHome = 1;
                                         let mpxPerMmHome = 7.6481;
                                         let mcalibrationCirclePixelsHome = 200;
 
-                                        // Ana sayfa sepete ekleme modalı
-                                        function openHomeAddToCartModal(productId, productName, productPrice, productImage) {
-                                            currentProduct = {
-                                                _id: productId,
-                                                name: productName,
-                                                price: productPrice,
-                                                imageUrl: productImage
-                                            };
+                                        // Ana sayfa sepete ekleme işlemi: modal kaldırıldı, doğrudan fetch ile ekleme
+                                        async function openHomeAddToCartModal(productId) {
+                                            try {
+                                                const response = await fetch('/cart/add', {
+                                                    method: 'POST',
+                                                    credentials: 'same-origin',
+                                                    headers: {
+                                                        'Content-Type': 'application/json'
+                                                    },
+                                                    body: JSON.stringify({
+                                                        productId: productId,
+                                                        quantity: 1,
+                                                        selectedSize: ''
+                                                    })
+                                                });
 
-                                            const modal = document.getElementById('addToCartModal');
-                                            const content = document.getElementById('modal-product-content');
+                                                const data = await response.json();
 
-                                            // Modal içeriğini doldur
-                                            content.innerHTML = `
-                                                <img src="${productImage}" alt="${productName}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;">
-                                                <h3 style="font-size: 18px; font-weight: 700; color: #140C40; margin-bottom: 8px;">${productName}</h3>
-                                                <p style="font-size: 20px; font-weight: 700; color: #ff2020; margin-bottom: 20px;">₺${parseFloat(productPrice).toLocaleString('tr-TR')}</p>
-                                                
-                                                <div class="variation-group" style="text-align: left; margin-bottom: 15px;">
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                                        <span style="font-weight: 600; color: #333;">Yüzük Ölçüsü</span>
-                                                        <a href="javascript:void(0)" onclick="openRingSizeModalHome()" style="font-size: 12px; color: #c5a059; font-weight: 600; text-decoration: underline;"><i class="fas fa-question-circle"></i> Ölçümü Nasıl Bulurum?</a>
-                                                    </div>
-                                                    <select id="selected-size-home" class="premium-select" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
-                                                        <option value="">Seçiniz</option>
-                                                        ${ringSizeChartHome.map(s => `<option value="${s.size}">${s.size}</option>`).join('')}
-                                                    </select>
-                                                </div>
-                                                
-                                                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                                                    <button onclick="closeAddToCartModal()" class="btn-premium-secondary" style="flex: 1; padding: 12px 20px; font-size: 14px;">İptal</button>
-                                                    <button onclick="addToCartFromHome()" class="btn-premium-primary" style="flex: 1; padding: 12px 20px; font-size: 14px;">Sepete Ekle</button>
-                                                </div>
-                                            `;
-
-                                            modal.style.display = 'flex';
-                                            document.body.style.overflow = 'hidden';
+                                                if (data.success) {
+                                                    alert('Ürün sepete eklendi.');
+                                                    window.location.href = '/cart';
+                                                } else {
+                                                    alert(data.message || 'Ürün sepete eklenemedi. Lütfen tekrar deneyin.');
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                alert('Sepete ekleme sırasında bir hata oluştu. Lütfen sayfayı yenileyip tekrar deneyin.');
+                                            }
                                         }
 
                                         function closeAddToCartModal() {
                                             const modal = document.getElementById('addToCartModal');
-                                            modal.style.display = 'none';
+                                            if (modal) {
+                                                modal.style.display = 'none';
+                                            }
                                             document.body.style.overflow = '';
                                         }
 
-                                        // Ana sayfadan sepete ekleme
                                         function addToCartFromHome() {
-                                            if (!currentProduct) return;
-
-                                            const sizeSelect = document.getElementById('selected-size-home');
-                                            const selectedSize = sizeSelect.value;
-
-                                            if (!selectedSize) {
-                                                alert('Lütfen bir yüzük ölçüsü seçin!');
-                                                return;
-                                            }
-
-                                            // Form oluşturalım ve POST edelim
-                                            const form = document.createElement('form');
-                                            form.method = 'POST';
-                                            form.action = '/cart/add';
-
-                                            const productIdInput = document.createElement('input');
-                                            productIdInput.type = 'hidden';
-                                            productIdInput.name = 'productId';
-                                            productIdInput.value = currentProduct._id;
-
-                                            const qtyInput = document.createElement('input');
-                                            qtyInput.type = 'hidden';
-                                            qtyInput.name = 'quantity';
-                                            qtyInput.value = '1';
-
-                                            const sizeInput = document.createElement('input');
-                                            sizeInput.type = 'hidden';
-                                            sizeInput.name = 'selectedSize';
-                                            sizeInput.value = selectedSize;
-
-                                            form.appendChild(productIdInput);
-                                            form.appendChild(qtyInput);
-                                            form.appendChild(sizeInput);
-
-                                            document.body.appendChild(form);
-                                            form.submit();
+                                            // Bu işlev artık kullanılmıyor; eski modal yapısından kalmıştır.
                                         }
 
                                         // Ana sayfa yüzük ölçü bulma modalı fonksiyonları

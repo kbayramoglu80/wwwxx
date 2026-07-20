@@ -1,6 +1,6 @@
 <footer>
     <!-- Footer Start-->
-    <div class="footer-area footer-padding" style="background: linear-gradient(135deg, #0f172a 0%, #1f2937 45%, #111827 100%); color: #ffffff;">
+    <div class="footer-area footer-padding" style="background: linear-gradient(135deg, #3f4c6b 0%, #345a8f 45%, #111827 100%); color: #ffffff;">
         <div class="container-fluid ">
             <div class="row d-flex justify-content-between">
                 <div class="col-xl-3 col-lg-3 col-md-8 col-sm-8">
@@ -176,121 +176,6 @@
 <!-- Jquery Plugins, main Jquery -->
 <script src="/assets/js/plugins.js"></script>
 <script src="/assets/js/main.js"></script>
-<!-- Premium Guest Auth Modal for Favorites -->
-<div id="favAuthModal" class="fav-auth-modal">
-    <div class="fav-auth-modal-content">
-        <button class="fav-auth-close-btn" onclick="closeFavAuthModal()">&times;</button>
-        <div class="fav-auth-modal-logo" style="margin-bottom: 10px; background: #f3f3f3; padding: 8px 12px; border-radius: 10px; display: inline-block; border: 1px solid #e7e7e7;">
-            <img src="/assets/img/logo.png" alt="Logo" style="height: 250px; width: auto; max-width: 220px; object-fit: contain; display: block;">
-        </div>
-        <h3>Favorilere Ekle</h3>
-        <p>Seçtiğiniz bu benzersiz mücevheri favorilerinize eklemek ve sepetinize daha hızlı ulaşmak için lütfen giriş
-            yapın veya kayıt olun.</p>
-        <div class="fav-auth-actions">
-            <a href="/auth/login" class="fav-auth-btn fav-auth-btn-primary">Giriş Yap</a>
-            <a href="/auth/register" class="fav-auth-btn fav-auth-btn-secondary">Üye Ol</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        const isUserLoggedIn = <%= user ? 'true' : 'false' %>;
-
-        // Handle Heart Icon Click
-        $(document).on('click', '.fav-btn', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const btn = $(this);
-            const productId = btn.attr('data-id');
-
-            if (!productId) return;
-
-            if (!isUserLoggedIn) {
-                // Guest User: Open Premium Auth Modal
-                openFavAuthModal();
-                return;
-            }
-
-            // Logged In User: AJAX Toggle Favorite
-            btn.prop('disabled', true); // Prevent spamming clicks
-
-            $.ajax({
-                url: '/user/favorites/toggle',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ productId: productId }),
-                success: function (data) {
-                    btn.prop('disabled', false);
-                    if (data.success) {
-                        const icon = btn.find('i');
-                        if (data.action === 'added') {
-                            icon.removeClass('far fa-heart').addClass('fas fa-heart text-danger');
-                            // Optional pulse animation
-                            btn.addClass('fav-pulse');
-                            setTimeout(() => btn.removeClass('fav-pulse'), 500);
-                        } else {
-                            icon.removeClass('fas fa-heart text-danger').addClass('far fa-heart');
-                            // If we are on the favorites page or profile favorites tab, remove the card smoothly
-                            const isFavoritesPage = window.location.pathname === '/user/favorites';
-                            const isProfileFavorites = window.location.pathname === '/user/profile' && btn.closest('#favorites').length > 0;
-                            if (isFavoritesPage || isProfileFavorites) {
-                                const card = btn.closest('.col-xl-3, .col-lg-4, .col-md-6, .premium-card');
-                                card.fadeOut(400, function () {
-                                    $(this).remove();
-                                    // Check if no favorites left in this grid
-                                    const grid = btn.closest('.premium-grid');
-                                    if (grid.length && grid.find('.premium-card').length === 0) {
-                                        if (isFavoritesPage) {
-                                            window.location.reload();
-                                        } else {
-                                            // Show empty message dynamically on profile favorites tab
-                                            $('#favorites .billing_details').html(`
-                                            <h3>Favori Mücevherlerim</h3>
-                                            <div class="text-center" style="padding: 40px 0;">
-                                                <div style="margin-bottom: 20px;">
-                                                    <i class="far fa-heart" style="font-size: 48px; color: #c49b45; opacity: 0.5;"></i>
-                                                </div>
-                                                <h4 style="font-family: 'Outfit', sans-serif; font-weight: 300; color: #111; margin-bottom: 15px;">Henüz favori ürününüz bulunmamaktadır.</h4>
-                                                <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Koleksiyonlarimizi incelemek için mağazamızı ziyaret edebilirsiniz.</p>
-                                                <a href="/shop" class="btn_3">Alışverişe Başla</a>
-                                            </div>
-                                        `);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                },
-                error: function (xhr, status, error) {
-                    btn.prop('disabled', false);
-                    console.error('Favorite toggle error:', error);
-                }
-            });
-        });
-    });
-
-    function openFavAuthModal() {
-        $('#favAuthModal').addClass('active');
-        $('body').css('overflow', 'hidden'); // Prevent scrolling behind modal
-    }
-
-    function closeFavAuthModal() {
-        $('#favAuthModal').removeClass('active');
-        $('body').css('overflow', ''); // Restore scrolling
-    }
-
-    // Close modal if user clicks backdrop
-    $(document).ready(function () {
-        $('#favAuthModal').on('click', function (e) {
-            if ($(e.target).hasClass('fav-auth-modal')) {
-                closeFavAuthModal();
-            }
-        });
-    });
-</script>
 
 </body>
 

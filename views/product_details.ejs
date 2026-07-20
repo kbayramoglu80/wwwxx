@@ -23,7 +23,7 @@
 
             <!--? Product Details Start -->
             <section class="product_details section_padding" style="background-color: #ffffff;">
-                <div class="pdp-wrapper">
+                <div class="pdp-wrapper product-detail-wrapper">
                     <div class="row">
                         <!-- LEFT COLUMN: GALLERY -->
                         <div class="col-lg-7">
@@ -110,7 +110,7 @@
                                 <!-- DİNAMİK METAL RENKLERİ -->
                                 <% if (product.metalColor) { %>
                                     <div class="variation-group">
-                                        <div class="variation-label">Altın Rengi <span id="color-label">
+                                        <div class="variation-label">Maden Rengi <span id="color-label">
                                                 <%= product.metalColor %>
                                             </span></div>
                                         <div class="swatch-list">
@@ -127,12 +127,17 @@
                                                         <div class="swatch-color swatch-rose-gold active"
                                                             onclick="selectVariation(this, 'color', 'Rose Gold')"
                                                             title="Rose Gold"></div>
-                                                        <% } else { %>
-                                                            <span class="badge badge-light"
-                                                                style="padding: 6px 12px; font-weight: bold; background: #f0f0f0; border-radius: 4px;">
-                                                                <%= product.metalColor %>
-                                                            </span>
-                                                            <% } %>
+                                                        <% } else if (product.metalColor==='Platinum' ||
+                                                            product.metalColor==='Platin' ) { %>
+                                                            <div class="swatch-color swatch-platinum active"
+                                                                onclick="selectVariation(this, 'color', 'Platinum')"
+                                                                title="Platinum"></div>
+                                                            <% } else { %>
+                                                                <span class="badge badge-light"
+                                                                    style="padding: 6px 12px; font-weight: bold; background: #f0f0f0; border-radius: 4px;">
+                                                                    <%= product.metalColor %>
+                                                                </span>
+                                                                <% } %>
                                         </div>
                                     </div>
                                     <% } %>
@@ -204,10 +209,6 @@
                                                     <button class="btn-premium-primary"
                                                         onclick="handleCartAction('<%= product._id %>', true)">Hemen
                                                         Satın Al</button>
-                                                    <button class="fav-btn fav-btn-pdp" data-id="<%= product._id %>">
-                                                        <i
-                                                            class="<%= (typeof userFavorites !== 'undefined' && userFavorites.includes(product._id.toString())) ? 'fas fa-heart text-danger' : 'far fa-heart' %>"></i>
-                                                    </button>
                                                 </div>
 
                                                 <!-- ÜRÜN ÖZELLİKLERİ TABLOSU (sadece dolu alanlar) -->

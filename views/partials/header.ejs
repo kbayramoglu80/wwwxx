@@ -431,9 +431,6 @@
                 <a href="<%= user ? '/user/profile' : '/auth/login' %>" title="<%= user ? 'Hesabım' : 'Giriş Yap' %>">
                     <i class="fas fa-user"></i>
                 </a>
-                <a href="/user/favorites" title="Favorilerim">
-                    <i class="fas fa-heart"></i>
-                </a>
                 <a href="/cart" title="Sepetim" style="position: relative;">
                     <i class="fas fa-shopping-bag"></i>
                     <span id="cart-count" style="position: absolute; top: -8px; right: -10px; background: #d9534f; color: white; border-radius: 50%; font-size: 10px; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
@@ -579,7 +576,6 @@
                         <li><a href="<%= user ? '/user/profile' : '/auth/login' %>">
                                 <%= user ? 'Hesabım' : 'Giriş Yap / Kayıt Ol' %>
                             </a></li>
-                        <li><a href="/user/favorites">Favorilerim</a></li>
                         <% if (user && user.role==='admin' ) { %>
                             <li><a href="/admin">Admin Paneli</a></li>
                             <% } %>
